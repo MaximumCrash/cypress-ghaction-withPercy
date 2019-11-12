@@ -100,8 +100,11 @@ const runTests = () => {
   const headed = getInputBool('headed')
   
   let percyTokenExc = 'export PERCY_TOKEN=' + core.getInput('percy_token') + '&&';
+  
+  console.log(percyTokenExc); 
 
   let cmd = percyTokenExc + 'percy exec -- npx cypress run'
+
   if (headed) {
    cmd += ' --headed' 
   }
