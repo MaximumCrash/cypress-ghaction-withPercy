@@ -1098,7 +1098,8 @@ const runTests = () => {
   const record = getInputBool('record')
   const parallel = getInputBool('parallel')
   const headed = getInputBool('headed')
-  const percyCMD = getInputBool('percy') ? 'percy exec -- ' : ''
+  //percy exec --
+  const percyCMD = getInputBool('percy') ? '' : ''
 
   let cmd = percyCMD + 'cypress run'
 
