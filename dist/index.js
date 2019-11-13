@@ -1137,9 +1137,9 @@ Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
         .then(saveCachedNpm)
         .then(saveCachedCypressBinary)
     }
-    // else {
-    //  return installPercy() 
-    // }
+    else {
+     return installPercy() 
+    }
   })
   .then(buildProject)
   .then(startServerAndTest)
