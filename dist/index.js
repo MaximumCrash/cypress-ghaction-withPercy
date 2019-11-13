@@ -1004,6 +1004,16 @@ const CYPRESS_BINARY_CACHE = (() => {
   return o
 })()
 
+
+const NEXT_BUILD_CACHE = (() => {
+  const o = {
+    inputPath: '~/.next/cache',
+    restoreKeys: `next-${platformAndArch}-`
+  }
+  o.primaryKey = o.restoreKeys + packageLockHash
+  return o
+})()
+
 const restoreCachedNpm = () => {
   console.log('trying to restore cached NPM modules')
   return restoreCache(
@@ -1032,6 +1042,23 @@ const saveCachedCypressBinary = () => {
   return saveCache(
     CYPRESS_BINARY_CACHE.inputPath,
     CYPRESS_BINARY_CACHE.primaryKey
+  )
+}
+
+const restoreCachedNextBuild = () => {
+  console.log('trying to restore cached Next.js build')
+  return restoreCache(
+    NEXT_BUILD_CACHE.inputPath,
+    NEXT_BUILD_CACHE.primaryKey,
+    NEXT_BUILD_CACHE.restoreKeys
+  )
+}
+
+const saveCachedNextBuild = () => {
+  console.log('saving Next.js build')
+  return saveCache(
+    NEXT_BUILD_CACHE.inputPath,
+    NEXT_BUILD_CACHE.primaryKey
   )
 }
 
@@ -1126,16 +1153,18 @@ const runTests = () => {
   //return exec.exec(cmd)
 }
 
-Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
-  .then(([npmCacheHit, cypressCacheHit]) => {
+Promise.all([restoreCachedNpm(), restoreCachedCypressBinary(), restoreCachedNextBuild()])
+  .then(([npmCacheHit, cypressCacheHit, nextCacheHit]) => {
     console.log('npm cache hit', npmCacheHit)
     console.log('cypress cache hit', cypressCacheHit)
+    console.log('nextjs cache hit', nextCacheHit)
 
-    if (!npmCacheHit || !cypressCacheHit) {
+    if (!npmCacheHit || !cypressCacheHit || !nextCacheHit) {
       return install()
         .then(verifyCypressBinary)
         .then(saveCachedNpm)
         .then(saveCachedCypressBinary)
+        .then(saveCachedNextBuild)
     }
     else {
      return installPercy() 
