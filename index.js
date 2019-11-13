@@ -86,16 +86,6 @@ const getInputBool = (name, defaultValue = false) => {
   return defaultValue
 }
 
-const exportPercy = () => {
-  const percyToken = core.getInput('percy_token'); 
-  if (!percyToken) {
-   console.log('Skipping Percy Export: Percy token not found')
-   return  
-  }
-  
-   return exec.exec('export PERCY_TOKEN=' + core.getInput('percy_token'))
-}
-
 const runTests = () => {
   const runTests = getInputBool('runTests', true)
   if (!runTests) {
@@ -108,7 +98,7 @@ const runTests = () => {
   const record = getInputBool('record')
   const parallel = getInputBool('parallel')
   const headed = getInputBool('headed')
-  const percyCMD = core.getInput('percy_token') ? 'npx percy exec -- ' : ''
+  const percyCMD = getInputBool('percy') ? 'npx percy exec -- ' : ''
 
   let cmd = percyCMD + 'npx cypress run'
 
@@ -147,7 +137,6 @@ Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
         .then(saveCachedCypressBinary)
     }
   })
-  .then(exportPercy)
   .then(runTests)
   .catch(error => {
     console.log(error)
