@@ -1078,7 +1078,7 @@ const runTests = () => {
   const parallel = getInputBool('parallel')
   const headed = getInputBool('headed')
   
-  let percyTokenExc = 'export PERCY_TOKEN=' + core.getInput('percy_token') + '&&';
+  let percyTokenExc = 'export PERCY_TOKEN=' + core.getInput('percy_token') + ' &&';
   
   console.log(percyTokenExc); 
 
