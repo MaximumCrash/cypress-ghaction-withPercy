@@ -103,7 +103,7 @@ const runTests = () => {
   
   console.log(percyTokenExc); 
 
-  let cmd = percyTokenExc + 'percy exec -- npx cypress run'
+  let cmd = percyTokenExc + ' percy exec -- npx cypress run'
 
   if (headed) {
    cmd += ' --headed' 
