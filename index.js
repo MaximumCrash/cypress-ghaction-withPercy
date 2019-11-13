@@ -73,7 +73,7 @@ const buildProject = () => {
 const startServerAndTest = () => {
   let runTestCMD = "'" + runTests() + "'"; 
   
-  let cmd = "npx start-server-and-test " + "'start'" + " 3000 " + runTestCMD;
+  let cmd = "npx start-server-and-test " + "'start'" + " 3000 " +  "'cy:run'"//runTestCMD;
   return exec.exec(cmd) 
 }
 
@@ -119,8 +119,7 @@ const runTests = () => {
   const record = getInputBool('record')
   const parallel = getInputBool('parallel')
   const headed = getInputBool('headed')
-  //percy exec --
-  const percyCMD = getInputBool('percy') ? '' : ''
+  const percyCMD = getInputBool('percy') ? 'percy exec -- ' : ''
 
   let cmd = percyCMD + 'cypress run'
 
