@@ -1052,7 +1052,7 @@ const buildProject = () => {
 const startServerAndTest = () => {
   let runTestCMD = "'" + runTests() + "'"; 
   
-  let cmd = "npx start-server-and-test " + "'start'" + " 3000 " +  "'cy:run'"//runTestCMD;
+  let cmd = "npx start-server-and-test " + "start" + " 3000 " +  "cy:run"//runTestCMD;
   return exec.exec(cmd) 
 }
 
