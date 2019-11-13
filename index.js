@@ -62,7 +62,7 @@ const installPercy = () => {
     return
   }
   
-  return exec.exec('npx install --save-dev @percy/cypress')
+  return exec.exec('npm install --save-dev @percy/cypress')
 }
 
 const install = () => {
