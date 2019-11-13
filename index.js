@@ -65,6 +65,11 @@ const installPercy = () => {
   return exec.exec('npm install --save-dev @percy/cypress')
 }
 
+const buildProject = () => {
+  console.log('Running: next build && next export')
+  return exec.exec('npm run build')
+}
+
 const startServerAndTest = () => {
   let cmd = `npx start-server-and-test 'start' 3000 '${runTests()}'`;
   return exec.exec(cmd) 
@@ -155,6 +160,7 @@ Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
      return installPercy() 
     }
   })
+  .then(buildProject)
   .then(startServerAndTest)
   .catch(error => {
     console.log(error)
