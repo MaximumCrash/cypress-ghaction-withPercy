@@ -56,6 +56,15 @@ const saveCachedCypressBinary = () => {
   )
 }
 
+const installPercy = () => {
+  if (!getInputBool('percy')) {
+    console.log('Skipping Percy install: percy is false/undefined')
+    return
+  }
+  
+  return exec.exec('npx install --save-dev @percy/cypress')
+}
+
 const install = () => {
   console.log('installing NPM dependencies')
   // prevent lots of progress messages during install
@@ -135,6 +144,9 @@ Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
         .then(verifyCypressBinary)
         .then(saveCachedNpm)
         .then(saveCachedCypressBinary)
+    }
+    else {
+     return installPercy() 
     }
   })
   .then(runTests)
