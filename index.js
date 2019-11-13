@@ -71,9 +71,9 @@ const buildProject = () => {
 }
 
 const startServerAndTest = () => {
-  let runTestCMD = runTests(); 
+  let runTestCMD = "'" + runTests() + "'"; 
   
-  let cmd = "npx start-server-and-test" + "'start'" + " 3000 " + runTestCMD;
+  let cmd = "npx start-server-and-test " + "'start'" + " 3000 " + runTestCMD;
   return exec.exec(cmd) 
 }
 
