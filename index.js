@@ -65,6 +65,11 @@ const installPercy = () => {
   return exec.exec('npm install --save-dev @percy/cypress')
 }
 
+const startServerAndTest = () => {
+  let cmd = `npx start-server-and-test 'start' 3000 '${runTests()}'`;
+  return exec.exec(cmd) 
+}
+
 const install = () => {
   console.log('installing NPM dependencies')
   // prevent lots of progress messages during install
@@ -107,9 +112,9 @@ const runTests = () => {
   const record = getInputBool('record')
   const parallel = getInputBool('parallel')
   const headed = getInputBool('headed')
-  const percyCMD = getInputBool('percy') ? 'npx percy exec -- ' : ''
+  const percyCMD = getInputBool('percy') ? 'percy exec -- ' : ''
 
-  let cmd = percyCMD + 'npx cypress run'
+  let cmd = percyCMD + 'cypress run'
 
   if (headed) {
    cmd += ' --headed' 
@@ -131,7 +136,8 @@ const runTests = () => {
   console.log('Cypress test command: %s', cmd)
 
   core.exportVariable('TERM', 'xterm')
-  return exec.exec(cmd)
+  return cmd
+  //return exec.exec(cmd)
 }
 
 Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
@@ -149,7 +155,7 @@ Promise.all([restoreCachedNpm(), restoreCachedCypressBinary()])
      return installPercy() 
     }
   })
-  .then(runTests)
+  .then(startServerAndTest)
   .catch(error => {
     console.log(error)
     core.setFailed(error.message)
