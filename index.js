@@ -67,7 +67,7 @@ const installPercy = () => {
 
 const buildProject = () => {
   console.log('Running: next build && next export')
-  return exec.exec('npx next build && npx next export')
+  return exec.exec('npm run build')
 }
 
 const startServerAndTest = () => {
